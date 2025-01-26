@@ -74,10 +74,31 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implement login logic here
-    console.log("User logged in:", formData);
+
+    console.log(formData);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/loginUser", {
+        body: JSON.stringify(formData), // Make sure `formData` is defined
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Parse the JSON response
+        console.log("User logged in:", data);
+        console.log("Successfully logged in");
+        window.location.href = "./Repository";
+      } else {
+        console.log("can't logged in");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
   };
 
   return (

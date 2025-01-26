@@ -62,6 +62,7 @@ const Label = ({ htmlFor, children }) => {
 };
 
 const Register = () => {
+  const [showMessage, setShowMessage] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -83,12 +84,37 @@ const Register = () => {
       alert("Passwords do not match!");
       return;
     }
+
+    fetch("http://localhost:8000/api/v1/registerUser", {
+      body: JSON.stringify(formData),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      setTimeout(() => {
+        setShowMessage(true);
+      }, 2000);
+
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 2000);
+
+      if (response.ok) {
+        window.location.href = "./login";
+      }
+    });
     // Implement registration logic here
     console.log("User registered:", formData);
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100 text-black">
+      {showMessage && (
+        <div className="bg-gray-600 px-10 py-3 rounded-xl text-white  h-28 absolute">
+          <p className="text-3xl font-bold ">Registered Successfully </p>
+        </div>
+      )}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
