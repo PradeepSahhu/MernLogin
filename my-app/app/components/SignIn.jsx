@@ -18,6 +18,7 @@ const SelfHosted = () => {
       <SignInOptions name={"Self Hosted GitLab"} logo={"./image_1.png"} />
       <SignInOptions name={"Sign in with SSO"} logo={"./key.png"} />
       <SignInOptions name={"Register"} logo={"./key.png"} dest={`./register`} />
+      <SignInOptions name={"Login"} logo={"./key.png"} dest={`./login`} />
     </div>
   );
 };
